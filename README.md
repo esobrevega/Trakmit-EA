@@ -1,88 +1,64 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Trakmit-EA
+[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/esobrevega/Trakmit-EA)
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# APS App - Workspace Management System
-
-This is a full-stack workspace management application built with Next.js, Appwrite, and Hono. It provides a platform for users to create, manage, and collaborate within different workspaces. The application features user authentication, workspace creation, member invitations via unique codes, and role-based access control.
+Trakmit-EA (Permitrakk) is a comprehensive, full-stack project and permit management system. Built with a modern technology stack including Next.js, Appwrite, and Hono, it provides a collaborative platform for teams to manage workspaces, projects, and permits (tasks) efficiently. The application features a modular, feature-sliced architecture for maintainability and scalability.
 
 ## ✨ Key Features
 
--   **User Authentication**: Secure sign-up, sign-in, and logout functionality handled by Appwrite.
--   **Workspace Management**: Users can create new workspaces, update existing ones (name and icon), and switch between them.
--   **Member Invitations**: Each workspace has a unique, shareable invite code and link to add new members.
--   **Role Management**: Members can be assigned roles (e.g., Admin, Member) within a workspace.
--   **Settings & Security**: Admins can manage workspace settings, reset invite codes, and delete the workspace.
--   **Responsive UI**: A modern and responsive interface built with shadcn/ui, suitable for both desktop and mobile devices.
+-   **User Authentication**: Secure sign-up, sign-in, and session management powered by Appwrite.
+-   **Workspace Management**: Create, switch between, and manage multiple workspaces. Each workspace has its own members, projects, and settings.
+-   **Project Management**: Organize work into projects within a workspace. Each project has a dedicated dashboard, settings, and analytics.
+-   **Permit (Task) Management**: Create, update, and track permits with various statuses. View permits in multiple formats:
+    -   **Table View**: A sortable and searchable data grid for all permits.
+    -   **Kanban Board**: A drag-and-drop interface to manage permit status (`Backlog`, `To Do`, `In Progress`, `In Review`, `Done`).
+    -   **Calendar View**: A monthly calendar to visualize permit due dates.
+-   **Member & Role Management**: Invite new members to a workspace via a unique, shareable link. Assign roles (`Admin`, `Member`) to manage permissions.
+-   **Analytics**: Dashboards for both workspaces and projects, providing insights into permit statistics (total, completed, overdue, etc.).
+-   **Responsive UI**: A modern and sleek interface built with Tailwind CSS and shadcn/ui, optimized for both desktop and mobile devices.
 
 ## 🛠️ Technology Stack
 
--   **Framework**: [Next.js](https://nextjs.org/) (App Router & Turbopack)
--   **Backend-as-a-Service**: [Appwrite](https://appwrite.io/) (for Database, Authentication, and Storage)
--   **API**: [Hono](https://hono.dev/) (for creating fast, lightweight API routes)
+-   **Framework**: [Next.js](https://nextjs.org/) (App Router)
+-   **Backend-as-a-Service**: [Appwrite](https://appwrite.io/) (Database, Authentication, Storage)
+-   **API Layer**: [Hono](https://hono.dev/) (for lightweight, type-safe API routes)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/)
--   **State Management**: [TanStack Query](https://tanstack.com/query/latest) (for server-state management)
--   **Form Handling**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) (for type-safe validation)
+-   **Data-Fetching & State**: [TanStack Query](https://tanstack.com/query/latest)
+-   **Form Handling**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
+-   **UI Components**: [Recharts](https://recharts.org/) (Charts), [React Big Calendar](http://jquense.github.io/react-big-calendar/), `@hello-pangea/dnd` (Kanban)
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these steps.
+Follow these instructions to set up and run the project locally.
 
 ### Prerequisites
 
--   Node.js (version 20 or higher)
--   An active Appwrite instance. You can set one up locally using Docker or use Appwrite Cloud.
+-   Node.js (v20 or newer)
+-   npm, yarn, or pnpm
+-   An Appwrite instance (can be self-hosted via Docker or on [Appwrite Cloud](https://cloud.appwrite.io/))
 
 ### Appwrite Setup
 
 1.  Create a new Appwrite Project.
-2.  **Database**: Create a new database and the following collections:
-    -   `workspaces`: for storing workspace data.
-    -   `members`: for managing user-workspace relationships and roles.
-3.  **Authentication**: Enable the Email/Password authentication provider.
-4.  **Storage**: Create a new bucket (e.g., `images`) to store workspace icons.
-5.  **API Keys**: Generate an API Key with necessary permissions (`databases`, `users`, `storage`).
+2.  **Database**:
+    -   Create a new Database. Note its ID.
+    -   Create the following collections and note their IDs:
+        -   `workspaces`
+        -   `projects`
+        -   `tasks`
+        -   `members`
+3.  **Authentication**: Enable the **Email/Password** provider in the Auth section.
+4.  **Storage**: Create a new Storage Bucket named `images` (or similar) and note its ID.
+5.  **API Keys**: In your Project Settings, go to the **API Keys** tab and create a new API Key with `databases`, `users`, and `storage` scopes. Note the secret key.
 
 ### Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/esobrevega/aps-app-1.git
-    cd aps-app-1
+    git clone https://github.com/esobrevega/trakmit-ea.git
+    cd trakmit-ea
     ```
 
 2.  **Install dependencies:**
@@ -91,7 +67,7 @@ To get a local copy up and running, follow these steps.
     ```
 
 3.  **Set up environment variables:**
-    Create a `.env.local` file in the root of the project and add the following variables, replacing the placeholder values with your Appwrite project details.
+    Create a `.env.local` file in the project root and add your Appwrite credentials.
 
     ```env
     # Appwrite Configuration
@@ -103,11 +79,13 @@ To get a local copy up and running, follow these steps.
     NEXT_PUBLIC_APPWRITE_DATABASE_ID=YOUR_DATABASE_ID
     NEXT_PUBLIC_APPWRITE_WORKSPACES_ID=YOUR_WORKSPACES_COLLECTION_ID
     NEXT_PUBLIC_APPWRITE_MEMBERS_ID=YOUR_MEMBERS_COLLECTION_ID
+    NEXT_PUBLIC_APPWRITE_PROJECTS_ID=YOUR_PROJECTS_COLLECTION_ID
+    NEXT_PUBLIC_APPWRITE_TASKS_ID=YOUR_TASKS_COLLECTION_ID
 
     # Appwrite Storage Bucket ID
     NEXT_PUBLIC_APPWRITE_IMAGES_BUCKET_ID=YOUR_IMAGES_BUCKET_ID
 
-    # Application URL for API client
+    # Application URL
     NEXT_PUBLIC_APP_URL=http://localhost:3000
     ```
 
@@ -116,37 +94,36 @@ To get a local copy up and running, follow these steps.
     npm run dev
     ```
 
-5.  Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+The application will be available at `http://localhost:3000`.
 
 ## 📂 Project Structure
 
-The project follows a feature-sliced architecture to keep the codebase organized and scalable.
+The project utilizes a feature-sliced design to maintain organization and promote scalability.
 
 ```
 src
-├── app/                  # Next.js App Router (Pages, Layouts, API)
-│   ├── (auth)/             # Authentication-related pages (sign-in, sign-up)
-│   ├── (dashboard)/        # Main application dashboard layout and pages
-│   ├── (standalone)/       # Pages with a minimal layout (create workspace, settings)
-│   └── api/[[...route]]/   # Hono API endpoint
-├── components/           # Reusable UI components
-│   └── ui/                 # shadcn/ui components
-├── features/             # Feature-sliced modules
-│   ├── auth/               # Authentication logic and components
-│   ├── members/            # Member management logic
-│   └── workspaces/         # Workspace management logic
-├── hooks/                # Custom React hooks
-└── lib/                  # Core utilities and library configurations
-    ├── appwrite.ts         # Appwrite admin and session clients
-    ├── rpc.ts              # Hono RPC client for type-safe API calls
-    ├── session-middleware.ts # Hono middleware for session handling
-    └── utils.ts            # General utility functions
+├── app/                  # Next.js App Router: Layouts, Pages, and API routes
+│   ├── (auth)/           # Routes for authentication (sign-in, sign-up)
+│   ├── (dashboard)/      # Protected routes for the main application dashboard
+│   ├── (standalone)/     # Pages with a minimal layout (e.g., settings, invites)
+│   └── api/[[...route]]/ # Hono API endpoint for backend logic
+├── components/           # Shared, reusable UI components (built with shadcn/ui)
+├── features/             # Business logic modules, sliced by feature
+│   ├── auth/             # Authentication logic, hooks, and components
+│   ├── members/          # Member management logic
+│   ├── projects/         # Project management logic
+│   ├── tasks/            # Permit/Task management logic
+│   └── workspaces/       # Workspace management logic
+├── hooks/                # Global custom React hooks
+└── lib/                  # Core utilities and configurations (Appwrite, Hono RPC)
 ```
 
-## 🌐 API
+## 🌐 API Endpoints
 
-The backend API is built with Hono and served from a single Next.js route handler at `/api/[[...route]]`. This provides a lightweight and efficient way to handle server-side logic.
+The backend is built with Hono and exposed through a single Next.js dynamic route at `/api`. Hono's RPC mode allows for type-safe communication between the client and server.
 
--   `/api/auth`: Handles user registration, login, logout, and current session retrieval.
--   `/api/workspaces`: Manages CRUD operations for workspaces, member invitations, and settings.
--   `/api/members`: Manages fetching, updating roles, and deleting members from a workspace.
+-   `/api/auth`: Handles user registration, login, logout, and session management.
+-   `/api/workspaces`: CRUD for workspaces, member invites, and analytics.
+-   `/api/projects`: CRUD for projects and project-specific analytics.
+-   `/api/tasks`: CRUD for permits (tasks), including bulk updates for Kanban board interactions.
+-   `/api/members`: Manages fetching, updating, and removing workspace members.
